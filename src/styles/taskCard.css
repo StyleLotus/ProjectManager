@@ -1,0 +1,43 @@
+.list-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .checkbox {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  .checkbox:checked {
+    background-color: #ffd700;
+  }
+  
+  .description {
+    flex: 1;
+    margin-right: 5px;
+  }
+  
+  .status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .completed {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .in-progress {
+    background-color: #ffc107;
+    color: black;
+  }

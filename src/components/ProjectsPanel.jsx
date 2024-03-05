@@ -1,5 +1,12 @@
 // Importacion de componentes necesarios
-import SearchBar from './SearchBar'
+import SearchBar from "./SearchBar";
+import ProjectModal from "./ProjectModal";
+import TaskModal from "./TaskModal";
+import TaskCard from "./TaskCard";
+
+// Importacion de los estilos
+
+import "../styles/projectPanel.css";
 
 // Icons FontAwesomes
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,21 +16,24 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 export default function ProjectsPanel() {
   return (
     <div className="mainContainer">
-      <button>
-        <FontAwesomeIcon icon={faGears} />
-      </button>
-      <h1 className="userName">Hi! Lotus</h1>
-      <p>Welcome Back to the workspace. We missed you!</p>
-      <SearchBar />
-      <h2>
-        Projects <span> (13)</span>
-      </h2>
-      <section className="projectsContainer">
-        <div>
+      <section className="leftContainer">
+        <button className="btnAll settingsBtn">
+          <FontAwesomeIcon icon={faGears} />
+        </button>
+        <h1 className="userName">Hi! Lotus</h1>
+        <p>Welcome Back to the workspace. We missed you!</p>
+        <SearchBar />
+        <h2>
+          Projects <span className="numberOfProjects"> (13)</span>
+        </h2>
+        <div className="projectsContainer">
           <button className="btn addProjectBtn">
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
+        {/* <ProjectModal /> */}
+      </section>
+      <section className="taskContainer">
         <div>
           <h2 className="projectTitle">Cyber Punk Projects</h2>
           <p className="projectDescription">
@@ -33,8 +43,16 @@ export default function ProjectsPanel() {
           </p>
           <h3>Date</h3>
           <hr />
-          <button className="btn addTaskBtn"><FontAwesomeIcon icon={faPlus} /></button>
+          <ul>
+            <TaskCard />
+            <TaskCard />
+            <TaskCard />
+          </ul>
+          <button className="btnAll addTaskBtn">
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
         </div>
+        {/* <TaskModal /> */}
       </section>
     </div>
   );
