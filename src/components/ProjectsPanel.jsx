@@ -3,6 +3,7 @@ import SearchBar from "./SearchBar";
 import ProjectModal from "./ProjectModal";
 import TaskModal from "./TaskModal";
 import TaskCard from "./TaskCard";
+import ProjectCard from "./ProjectCard"
 
 // Importacion de los estilos
 
@@ -27,6 +28,10 @@ export default function ProjectsPanel() {
           Projects <span className="numberOfProjects"> (13)</span>
         </h2>
         <div className="projectsContainer">
+          <ProjectCard></ProjectCard>
+          <ProjectCard></ProjectCard>
+          <ProjectCard></ProjectCard>
+          <ProjectCard></ProjectCard>
           <button className="btn addProjectBtn">
             <FontAwesomeIcon icon={faPlus} />
           </button>
@@ -44,8 +49,6 @@ export default function ProjectsPanel() {
           <h3>Date</h3>
           <hr />
           <ul>
-            <TaskCard />
-            <TaskCard />
             <TaskCard />
           </ul>
           <button className="btnAll addTaskBtn">

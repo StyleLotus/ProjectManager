@@ -1,0 +1,22 @@
+.square {
+  width: 80px;
+  height: 80px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  margin: auto;
+}
+
+.title {
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: normal;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}

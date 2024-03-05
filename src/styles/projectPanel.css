@@ -34,6 +34,11 @@ settingsBtn{
   margin: 40px 80px;
 }
 
+.projectsContainer{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .leftContainer {
   position: relative;
   padding: 50px;

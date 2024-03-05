@@ -19,6 +19,7 @@ export default function TaskModal() {
     // Limpiar los campos después de agregar el Tarea
     setName("");
     setDueDate("");
+    setDescription("")
 
     // Cerrar el modal
   };
