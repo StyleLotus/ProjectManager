@@ -54,6 +54,10 @@ input[type="date"],
   resize: none;
 }
 
+textarea{
+  height: 100px;
+}
+
 .buttonAdd {
   background: linear-gradient(
     360deg,

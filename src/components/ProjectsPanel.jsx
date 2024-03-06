@@ -3,7 +3,11 @@ import SearchBar from "./SearchBar";
 import ProjectModal from "./ProjectModal";
 import TaskModal from "./TaskModal";
 import TaskCard from "./TaskCard";
-import ProjectCard from "./ProjectCard"
+import ProjectCard from "./ProjectCard";
+import {
+  ProjectContext,
+  ProjectDispatchContext,
+} from "../contexts/ProjectContext";
 
 // Importacion de los estilos
 
@@ -13,8 +17,15 @@ import "../styles/projectPanel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGears } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useContext } from "react";
 
 export default function ProjectsPanel() {
+  const { showProjectModal, setShowProjectModal } = useContext(ProjectContext);
+
+  const handleProjectModalView = () =>{
+    setShowProjectModal(!showProjectModal);
+  }
+
   return (
     <div className="mainContainer">
       <section className="leftContainer">
@@ -29,14 +40,11 @@ export default function ProjectsPanel() {
         </h2>
         <div className="projectsContainer">
           <ProjectCard></ProjectCard>
-          <ProjectCard></ProjectCard>
-          <ProjectCard></ProjectCard>
-          <ProjectCard></ProjectCard>
-          <button className="btn addProjectBtn">
+          <button className="btn addProjectBtn" onClick={handleProjectModalView}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
-        {/* <ProjectModal /> */}
+        {showProjectModal && < ProjectModal />}
       </section>
       <section className="taskContainer">
         <div>

@@ -1,12 +1,20 @@
 import "../styles/modals.css";
+import {
+  ProjectContext,
+  ProjectDispatchContext,
+} from "../contexts/ProjectContext";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 export default function ProjectModal() {
+  const { showProjectModal, setShowProjectModal } = useContext(ProjectContext);
+  const  dispatch  = useContext(ProjectDispatchContext);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("#ffffff"); // Valor inicial blanco
   const [dueDate, setDueDate] = useState("");
+  let nextId = 0;
 
   const handleAddProject = () => {
     // Verificar que todos los campos sean completados
@@ -16,6 +24,14 @@ export default function ProjectModal() {
     }
 
     // Llamar a la función de agregar proyecto pasando los datos
+    dispatch({
+      type: "added",
+      id: nextId++,
+      name: name,
+      description: description,
+      color: color,
+      dueDate: dueDate
+    });
 
     // Limpiar los campos después de agregar el proyecto
     setName("");
@@ -24,6 +40,7 @@ export default function ProjectModal() {
     setDueDate("");
 
     // Cerrar el modal
+    setShowProjectModal(!showProjectModal);
   };
 
   return (
@@ -32,10 +49,15 @@ export default function ProjectModal() {
         <div className="modal-content">
           <header className="modalHeader">
             <h2>Agregar Proyecto</h2>
-            <button className="close">x</button>
-
+            <button
+              className="close"
+              onClick={() => setShowProjectModal(!showProjectModal)}
+            >
+              x
+            </button>
           </header>
           <input
+            className="nameInput"
             type="text"
             placeholder="Nombre *"
             value={name}
