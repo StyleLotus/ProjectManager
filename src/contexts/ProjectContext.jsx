@@ -45,29 +45,19 @@ function tasksDispatch(projects, action) {
           tasks: [],
         },
       ];
-      console.log(newProject);
       return newProject;
     }
     case "addTask":{
       const updatedProjects = projects.map((project) =>{
         if(project.id === action.projectId){
-          const newTask = {
-            id: project.nextId,
-            name: action.name,
-            description: action.description,
-            dueDate: action.dueDate, 
-            status: "in-progress"
-          };
           return {
               ...project,
-              tasks: [...project.tasks, newTask],
-              nextId: project.nextId + 1
+              tasks: [...project.tasks, action.task],
           };
         }else{
           return project;
         }
       })
-      console.log(updatedProjects);
       return updatedProjects
     }
     default :

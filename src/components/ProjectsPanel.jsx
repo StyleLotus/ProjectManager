@@ -40,7 +40,6 @@ export default function ProjectsPanel() {
 
   const handleSelectedProject = (project) => {
     setSelectedProject(project);
-    console.log(project);
   };
 
   return (
@@ -82,7 +81,7 @@ export default function ProjectsPanel() {
             <hr />
             <ul>
               {selectedProject.tasks.map((task, index) => {
-                <TaskCard key={index} task={task} />;
+                return <TaskCard key={index} task={task} />;
               })}
             </ul>
           </div>

@@ -1,4 +1,7 @@
-import { ProjectContext, ProjectDispatchContext } from "../contexts/ProjectContext";
+import {
+  ProjectContext,
+  ProjectDispatchContext,
+} from "../contexts/ProjectContext";
 import "../styles/modals.css";
 
 import { useState, useContext } from "react";
@@ -11,10 +14,10 @@ export default function TaskModal() {
     showTaskModal,
     setShowTaskModal,
     selectedProject,
-    setSelectedProject,
   } = useContext(ProjectContext);
 
-  const dispatch = useContext(ProjectDispatchContext)
+
+  const dispatch = useContext(ProjectDispatchContext);
 
   const handleAddTask = () => {
     // Verificar que todos los campos sean completados
@@ -26,12 +29,10 @@ export default function TaskModal() {
     // Llamar a la función de agregar Tarea pasando los datos
 
     dispatch({
-      type: 'addTask',
+      type: "addTask",
       projectId: selectedProject.id,
-      name: name,
-      description: description,
-      dueDate: dueDate
-    })
+      task: { name: name, description: description, dueDate: dueDate },
+    });
 
     // Limpiar los campos después de agregar el Tarea
     setName("");

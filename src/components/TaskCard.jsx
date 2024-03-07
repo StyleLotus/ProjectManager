@@ -1,19 +1,20 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import "../styles/taskCard.css"; // Estilos CSS para el componente
 
-const TaskCard = () => {
-  const [completed, setCompleted] = useState(true);
-  const [description, setDescription] = useState("");
-
+const TaskCard = ({ task }) => {
   return (
     <li className="list-item">
-      <input type="checkbox" checked={completed} className="checkbox" />
-      <span className="description">{description}</span>
-      <span className={`status ${completed ? "in-progress" : "completed"}`}>
-        {completed ? "In Progress" : "Completed"}
-      </span>
+      <input type="checkbox"  className="checkbox" />
+      <span className="description">{task.description}</span>
+        {task.status === "in-progress" ? "Completed" : "In Progress"}
     </li>
   );
+};
+
+TaskCard.propTypes = {
+  task: PropTypes.object.isRequired,
+  description: PropTypes.string,
 };
 
 export default TaskCard;
