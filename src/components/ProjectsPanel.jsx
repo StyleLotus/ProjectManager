@@ -20,11 +20,12 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 
 export default function ProjectsPanel() {
-  const { showProjectModal, setShowProjectModal } = useContext(ProjectContext);
+  const { showProjectModal, setShowProjectModal, projects   } =
+    useContext(ProjectContext);
 
-  const handleProjectModalView = () =>{
+  const handleProjectModalView = () => {
     setShowProjectModal(!showProjectModal);
-  }
+  };
 
   return (
     <div className="mainContainer">
@@ -39,12 +40,16 @@ export default function ProjectsPanel() {
           Projects <span className="numberOfProjects"> (13)</span>
         </h2>
         <div className="projectsContainer">
-          <ProjectCard></ProjectCard>
-          <button className="btn addProjectBtn" onClick={handleProjectModalView}>
+          {projects.map((project, index) =>  <ProjectCard key={index} project={project}/>
+          )}
+          <button
+            className="btn addProjectBtn"
+            onClick={handleProjectModalView}
+          >
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
-        {showProjectModal && < ProjectModal />}
+        {showProjectModal && <ProjectModal />}
       </section>
       <section className="taskContainer">
         <div>

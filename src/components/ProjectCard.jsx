@@ -1,18 +1,33 @@
+import PropTypes from "prop-types";
+
 //Styles Added
 
 import "../styles/projectCard.css";
 
 import "../styles/projectCard.css";
 
-const SquareComponent = () => {
+export default function ProjectCard({ project }) {
+
+  function getInitials(name){
+    const words = name.split(' ');
+    const initials = [];
+    words.forEach(word =>{
+      if(word.length > 0){initials.push(word[0].toUpperCase())}
+    })
+
+    return initials.join('');
+  }
+
   return (
     <div>
-      <div className="square">
-        <p className="content">ML</p>
+      <div className="square" style={{backgroundColor : project.color}}>
+        <p className="content">{getInitials(project.name)}</p>
       </div>
-      <h2 className="title">Titulo</h2>
+      <h2 className="title">{project.name}</h2>
     </div>
   );
-};
+}
 
-export default SquareComponent;
+ProjectCard.propTypes = {
+  project: PropTypes.any,
+};
