@@ -6,7 +6,7 @@ import "../styles/projectCard.css";
 
 import "../styles/projectCard.css";
 
-export default function ProjectCard({ project }) {
+export default function ProjectCard({ project, onClick }) {
 
   function getInitials(name){
     const words = name.split(' ');
@@ -19,7 +19,7 @@ export default function ProjectCard({ project }) {
   }
 
   return (
-    <div>
+    <div onClick={onClick}>
       <div className="square" style={{backgroundColor : project.color}}>
         <p className="content">{getInitials(project.name)}</p>
       </div>
@@ -30,4 +30,6 @@ export default function ProjectCard({ project }) {
 
 ProjectCard.propTypes = {
   project: PropTypes.any,
+  onClick: PropTypes.func.isRequired,
+
 };

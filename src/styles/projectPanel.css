@@ -53,8 +53,10 @@ settingsBtn{
 }
 
 .addProjectBtn {
-  width: 90%;
-  padding: 25px 15px;
+  max-width: 80px;max-height: 80px;
+  min-width: 80px;min-height: 80px;
+  margin: auto;
+  margin-top: 16px;
   border: 1px dashed #000;
   background-color: transparent;
 }

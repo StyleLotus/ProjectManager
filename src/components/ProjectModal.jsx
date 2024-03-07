@@ -7,14 +7,14 @@ import {
 import { useState, useContext } from "react";
 
 export default function ProjectModal() {
-  const { showProjectModal, setShowProjectModal } = useContext(ProjectContext);
-  const  dispatch  = useContext(ProjectDispatchContext);
+  const { showProjectModal, setShowProjectModal, nextId, setNextId } =
+    useContext(ProjectContext);
+  const dispatch = useContext(ProjectDispatchContext);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [color, setColor] = useState("#ffffff"); // Valor inicial blanco
   const [dueDate, setDueDate] = useState("");
-  let nextId = 0;
 
   const handleAddProject = () => {
     // Verificar que todos los campos sean completados
@@ -26,12 +26,14 @@ export default function ProjectModal() {
     // Llamar a la función de agregar proyecto pasando los datos
     dispatch({
       type: "added",
-      id: nextId++,
+      id: nextId,
       name: name,
       description: description,
       color: color,
-      dueDate: dueDate
+      dueDate: dueDate,
     });
+
+    setNextId(nextId + 1);
 
     // Limpiar los campos después de agregar el proyecto
     setName("");

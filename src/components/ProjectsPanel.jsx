@@ -17,14 +17,30 @@ import "../styles/projectPanel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGears } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function ProjectsPanel() {
-  const { showProjectModal, setShowProjectModal, projects   } =
-    useContext(ProjectContext);
+  const {
+    showProjectModal,
+    setShowProjectModal,
+    showTaskModal,
+    setShowTaskModal,
+    projects,
+    selectedProject,
+    setSelectedProject,
+  } = useContext(ProjectContext);
 
   const handleProjectModalView = () => {
     setShowProjectModal(!showProjectModal);
+  };
+
+  const handleTaskModalView = () => {
+    setShowTaskModal(!showTaskModal);
+  };
+
+  const handleSelectedProject = (project) => {
+    setSelectedProject(project);
+    console.log(project);
   };
 
   return (
@@ -37,11 +53,17 @@ export default function ProjectsPanel() {
         <p>Welcome Back to the workspace. We missed you!</p>
         <SearchBar />
         <h2>
-          Projects <span className="numberOfProjects"> (13)</span>
+          Projects{" "}
+          <span className="numberOfProjects"> ({projects.length})</span>
         </h2>
         <div className="projectsContainer">
-          {projects.map((project, index) =>  <ProjectCard key={index} project={project}/>
-          )}
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              project={project}
+              onClick={() => handleSelectedProject(project)}
+            />
+          ))}
           <button
             className="btn addProjectBtn"
             onClick={handleProjectModalView}
@@ -52,23 +74,25 @@ export default function ProjectsPanel() {
         {showProjectModal && <ProjectModal />}
       </section>
       <section className="taskContainer">
-        <div>
-          <h2 className="projectTitle">Cyber Punk Projects</h2>
-          <p className="projectDescription">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-            explicabo earum, error aperiam perspiciatis sint modi neque
-            perferendis ullam!
-          </p>
-          <h3>Date</h3>
-          <hr />
-          <ul>
-            <TaskCard />
-          </ul>
-          <button className="btnAll addTaskBtn">
+        {selectedProject && (
+          <div>
+            <h2 className="projectTitle">{selectedProject.name}</h2>
+            <p className="projectDescription">{selectedProject.description}</p>
+            <h3>Date</h3>
+            <hr />
+            <ul>
+              {selectedProject.tasks.map((task, index) => {
+                <TaskCard key={index} task={task} />;
+              })}
+            </ul>
+          </div>
+        )}
+        {!showTaskModal && selectedProject && (
+          <button className="btnAll addTaskBtn" onClick={handleTaskModalView}>
             <FontAwesomeIcon icon={faPlus} />
           </button>
-        </div>
-        {/* <TaskModal /> */}
+        )}
+        {showTaskModal && <TaskModal />}
       </section>
     </div>
   );

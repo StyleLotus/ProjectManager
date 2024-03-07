@@ -1,11 +1,20 @@
+import { ProjectContext, ProjectDispatchContext } from "../contexts/ProjectContext";
 import "../styles/modals.css";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 export default function TaskModal() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
+  const {
+    showTaskModal,
+    setShowTaskModal,
+    selectedProject,
+    setSelectedProject,
+  } = useContext(ProjectContext);
+
+  const dispatch = useContext(ProjectDispatchContext)
 
   const handleAddTask = () => {
     // Verificar que todos los campos sean completados
@@ -16,12 +25,21 @@ export default function TaskModal() {
 
     // Llamar a la función de agregar Tarea pasando los datos
 
+    dispatch({
+      type: 'addTask',
+      projectId: selectedProject.id,
+      name: name,
+      description: description,
+      dueDate: dueDate
+    })
+
     // Limpiar los campos después de agregar el Tarea
     setName("");
     setDueDate("");
-    setDescription("")
+    setDescription("");
 
     // Cerrar el modal
+    setShowTaskModal(!showTaskModal);
   };
 
   return (
@@ -30,7 +48,12 @@ export default function TaskModal() {
         <div className="modal-content">
           <header className="modalHeader">
             <h2>Agregar Tarea</h2>
-            <button className="close">x</button>
+            <button
+              className="close"
+              onClick={() => setShowTaskModal(!showTaskModal)}
+            >
+              x
+            </button>
           </header>
           <input
             className="nameInput"
