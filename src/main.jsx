@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import OptionsBox from "./components/OptionBox";
+
 // import Login from './components/login'
 import ProjectsPanel from "./components/ProjectsPanel";
 

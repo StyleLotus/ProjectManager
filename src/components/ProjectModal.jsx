@@ -4,33 +4,36 @@ import {
   ProjectDispatchContext,
 } from "../contexts/ProjectContext";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 export default function ProjectModal() {
-  const { showProjectModal, setShowProjectModal, nextId, setNextId } =
-    useContext(ProjectContext);
+  const {
+    showProjectModal,
+    setShowProjectModal,
+    nextId,
+    setNextId,
+  } = useContext(ProjectContext);
   const dispatch = useContext(ProjectDispatchContext);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#ffffff"); // Valor inicial blanco
-  const [dueDate, setDueDate] = useState("");
+  const [color, setColor] = useState("#ffd700");
 
   const handleAddProject = () => {
     // Verificar que todos los campos sean completados
-    if (!name.trim() || !description.trim() || !dueDate.trim()) {
+    if (!name.trim() || !description.trim()) {
       alert("Por favor completa todos los campos obligatorios.");
       return;
     }
 
     // Llamar a la función de agregar proyecto pasando los datos
+
     dispatch({
       type: "added",
       id: nextId,
       name: name,
       description: description,
       color: color,
-      dueDate: dueDate,
     });
 
     setNextId(nextId + 1);
@@ -39,7 +42,6 @@ export default function ProjectModal() {
     setName("");
     setDescription("");
     setColor("#ffffff");
-    setDueDate("");
 
     // Cerrar el modal
     setShowProjectModal(!showProjectModal);
@@ -76,13 +78,6 @@ export default function ProjectModal() {
             type="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
-          />
-          <input
-            type="date"
-            placeholder="Fecha de entrega *"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            required
           />
           <button className="buttonAdd" onClick={handleAddProject}>
             Agregar Proyecto

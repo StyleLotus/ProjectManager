@@ -8,8 +8,13 @@ export function ProjectProvider({ children }) {
   const [projects, dispatch] = useReducer(tasksDispatch, []);
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showProjectModal, setShowProjectModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
   const [nextId, setNextId] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const [doubleClickX, setDoubleClickX] = useState(null);
+  const [doubleClickY, setDoubleClickY] = useState(null);
+  const [editingActive, setEditingActive] = useState(false);
 
   return (
     <ProjectContext.Provider
@@ -23,6 +28,16 @@ export function ProjectProvider({ children }) {
         setSelectedProject,
         nextId,
         setNextId,
+        visible,
+        setVisible,
+        doubleClickX,
+        setDoubleClickX,
+        doubleClickY,
+        setDoubleClickY,
+        editingActive,
+        setEditingActive,
+        showEditModal,
+        setShowEditModal,
       }}
     >
       <ProjectDispatchContext.Provider value={dispatch}>
@@ -47,23 +62,42 @@ function tasksDispatch(projects, action) {
       ];
       return newProject;
     }
-    case "addTask":{
-      const updatedProjects = projects.map((project) =>{
-        if(project.id === action.projectId){
+    case "addTask": {
+      const updatedProjects = projects.map((project) => {
+        if (project.id === action.projectId) {
           return {
-              ...project,
-              tasks: [...project.tasks, action.task],
+            ...project,
+            tasks: [...project.tasks, action.task],
           };
-        }else{
+        } else {
           return project;
         }
-      })
-      return updatedProjects
+      });
+      return updatedProjects;
     }
-    default :
-      return projects
+    case "deleteProject": {
+      const updatedProjects = projects.filter(
+        (project) => project.id !== action.projectId
+      );
+
+      return updatedProjects;
+    }
+    case "editProject": {
+      const updatedProjects = projects.map((project) => {
+        if (project.id === action.projectId) {
+          return {
+            ...project,
+            name: action.name,
+            description: action.description,
+            color: action.color,
+          };
+        }
+      });
+      return updatedProjects;
+    }
+    default:
+      return projects;
   }
- 
 }
 
 ProjectProvider.propTypes = {

@@ -6,7 +6,7 @@ import "../styles/projectCard.css";
 
 import "../styles/projectCard.css";
 
-export default function ProjectCard({ project, onClick }) {
+export default function ProjectCard({ project, onClick, onDoubleClick }) {
 
   function getInitials(name){
     const words = name.split(' ');
@@ -19,7 +19,7 @@ export default function ProjectCard({ project, onClick }) {
   }
 
   return (
-    <div onClick={onClick}>
+    <div onClick={onClick} onDoubleClick={onDoubleClick}>
       <div className="square" style={{backgroundColor : project.color}}>
         <p className="content">{getInitials(project.name)}</p>
       </div>
@@ -29,7 +29,7 @@ export default function ProjectCard({ project, onClick }) {
 }
 
 ProjectCard.propTypes = {
-  project: PropTypes.any,
+  project: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
-
+  onDoubleClick: PropTypes.func.isRequired
 };

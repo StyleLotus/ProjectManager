@@ -1,46 +1,39 @@
+import "../styles/modals.css";
 import {
   ProjectContext,
   ProjectDispatchContext,
 } from "../contexts/ProjectContext";
-import "../styles/modals.css";
 
 import { useState, useContext } from "react";
 
-export default function TaskModal() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const {
-    showTaskModal,
-    setShowTaskModal,
-    selectedProject,
-  } = useContext(ProjectContext);
-
-
+export default function EditModal() {
+  const {  selectedProject, setShowEditModal, showEditModal } =
+    useContext(ProjectContext);
   const dispatch = useContext(ProjectDispatchContext);
 
-  const handleAddTask = () => {
-    // Verificar que todos los campos sean completados
-    if (!name.trim() || !dueDate.trim() || !description.trim()) {
+  const [name, setName] = useState(selectedProject ? selectedProject.name : "");
+  const [description, setDescription] = useState(selectedProject ? selectedProject.description : "");
+  const [color, setColor] = useState(selectedProject ? selectedProject.color :"#ffd700");
+
+  const handleEditProject = () => {
+    if (!name.trim() || !description.trim()) {
       alert("Por favor completa todos los campos obligatorios.");
       return;
     }
 
-    // Llamar a la función de agregar Tarea pasando los datos
-
     dispatch({
-      type: "addTask",
+      type: "editProject",
       projectId: selectedProject.id,
-      task: { name: name, description: description, dueDate: dueDate, status: 'in-progress' },
+      name: name,
+      description: description,
+      color: color,
     });
 
-    // Limpiar los campos después de agregar el Tarea
     setName("");
-    setDueDate("");
     setDescription("");
+    setColor("#ffffff");
 
-    // Cerrar el modal
-    setShowTaskModal(!showTaskModal);
+    setShowEditModal(false)
   };
 
   return (
@@ -48,10 +41,10 @@ export default function TaskModal() {
       <div className="modal">
         <div className="modal-content">
           <header className="modalHeader">
-            <h2>Agregar Tarea</h2>
+            <h2>Editar Proyecto</h2>
             <button
               className="close"
-              onClick={() => setShowTaskModal(!showTaskModal)}
+              onClick={() => setShowEditModal(!showEditModal)}
             >
               x
             </button>
@@ -64,7 +57,6 @@ export default function TaskModal() {
             onChange={(e) => setName(e.target.value)}
             required
           />
-
           <textarea
             placeholder="Descripción *"
             value={description}
@@ -72,14 +64,12 @@ export default function TaskModal() {
             required
           ></textarea>
           <input
-            type="date"
-            placeholder="Fecha de entrega *"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            required
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
           />
-          <button className="buttonAdd" onClick={handleAddTask}>
-            Agregar Tarea
+          <button className="buttonAdd" onClick={handleEditProject}>
+            Editar Proyecto
           </button>
         </div>
       </div>
