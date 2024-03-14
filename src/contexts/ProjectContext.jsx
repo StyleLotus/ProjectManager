@@ -15,6 +15,8 @@ export function ProjectProvider({ children }) {
   const [doubleClickX, setDoubleClickX] = useState(null);
   const [doubleClickY, setDoubleClickY] = useState(null);
   const [editingActive, setEditingActive] = useState(false);
+  const [filteredData, setFilteredData] = useState(projects);
+
 
   return (
     <ProjectContext.Provider
@@ -38,6 +40,8 @@ export function ProjectProvider({ children }) {
         setEditingActive,
         showEditModal,
         setShowEditModal,
+        filteredData, 
+        setFilteredData
       }}
     >
       <ProjectDispatchContext.Provider value={dispatch}>
@@ -91,6 +95,8 @@ function tasksDispatch(projects, action) {
             description: action.description,
             color: action.color,
           };
+        }else{
+          return project
         }
       });
       return updatedProjects;

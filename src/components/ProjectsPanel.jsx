@@ -42,6 +42,8 @@ export default function ProjectsPanel() {
 
   const dispatch = useContext(ProjectDispatchContext);
 
+  const [searchQuery, setSearchQuery] = useState("");
+
   const handleProjectModalView = () => {
     setShowProjectModal(!showProjectModal);
   };
@@ -68,8 +70,8 @@ export default function ProjectsPanel() {
       projectId: selectedProject.id,
       name: selectedProject.name,
       description: selectedProject.description,
-      color: selectedProject.color
-    })
+      color: selectedProject.color,
+    });
     setShowEditModal(true);
     setVisible(false);
   };
@@ -94,6 +96,12 @@ export default function ProjectsPanel() {
     return tasksByDate;
   };
 
+  const filteredProjects = searchQuery
+    ? projects.filter((project) =>
+        project.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : projects;
+
   return (
     <>
       <OptionsBox
@@ -109,7 +117,7 @@ export default function ProjectsPanel() {
           </button>
           <h1 className="userName">Hi! Lotus</h1>
           <p>Welcome Back to the workspace. We missed you!</p>
-          <SearchBar />
+          <SearchBar onSearch={setSearchQuery} />
           <h2>
             Projects{" "}
             <span className="numberOfProjects"> ({projects.length})</span>
@@ -121,14 +129,18 @@ export default function ProjectsPanel() {
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
-            {projects.map((project, index) => (
+            {filteredProjects.length > 0 ? (
+            
+            filteredProjects.map((project, index) => (
               <ProjectCard
                 key={index}
                 project={project}
                 onClick={() => handleSelectedProject(project)}
                 onDoubleClick={(e) => handleDoubleClick(e, project)}
               />
-            ))}
+            )))
+            : <p>No se encontraron proyectos que coincidan</p>
+          }
           </div>
           {showProjectModal && <ProjectModal />}
           {showEditModal && <EditModal />}

@@ -4,7 +4,7 @@ import {
   ProjectDispatchContext,
 } from "../contexts/ProjectContext";
 
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 
 export default function ProjectModal() {
   const {
