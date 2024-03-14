@@ -6,6 +6,7 @@ import TaskCard from "./TaskCard";
 import ProjectCard from "./ProjectCard";
 import OptionsBox from "./OptionBox";
 import EditModal from "./EditModal";
+import OptionModal from "./OptionsModal";
 
 import {
   ProjectContext,
@@ -23,6 +24,9 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 
 export default function ProjectsPanel() {
+  const [showOptions, setShowOptions] = useState(false);
+  const [username, setUsername] = useState("Lotus")
+
   const {
     showProjectModal,
     setShowProjectModal,
@@ -43,6 +47,15 @@ export default function ProjectsPanel() {
   const dispatch = useContext(ProjectDispatchContext);
 
   const [searchQuery, setSearchQuery] = useState("");
+
+  const handleNameChange= (name) =>{
+    setUsername(name)
+    setShowOptions(false)
+  }
+
+  const handleShowOptions = () => {
+    setShowOptions(!showOptions);
+  };
 
   const handleProjectModalView = () => {
     setShowProjectModal(!showProjectModal);
@@ -102,6 +115,8 @@ export default function ProjectsPanel() {
       )
     : projects;
 
+  const isAddButtonVisible = !searchQuery;
+
   return (
     <>
       <OptionsBox
@@ -112,35 +127,46 @@ export default function ProjectsPanel() {
       />
       <div className="mainContainer">
         <section className="leftContainer">
-          <button className="btnAll settingsBtn">
+          <button className="btnAll settingsBtn" onClick={handleShowOptions}>
             <FontAwesomeIcon icon={faGears} />
           </button>
-          <h1 className="userName">Hi! Lotus</h1>
+          {showOptions && <OptionModal onNameChange={handleNameChange}/>}
+
+          <h1 className="userName">Hi! {username}</h1>
           <p>Welcome Back to the workspace. We missed you!</p>
           <SearchBar onSearch={setSearchQuery} />
           <h2>
             Projects{" "}
             <span className="numberOfProjects"> ({projects.length})</span>
           </h2>
-          <div className="projectsContainer overflowPanel overflowPanelLeft">
-            <button
-              className="btn addProjectBtn"
-              onClick={handleProjectModalView}
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-            {filteredProjects.length > 0 ? (
-            
-            filteredProjects.map((project, index) => (
-              <ProjectCard
-                key={index}
-                project={project}
-                onClick={() => handleSelectedProject(project)}
-                onDoubleClick={(e) => handleDoubleClick(e, project)}
-              />
-            )))
-            : <p>No se encontraron proyectos que coincidan</p>
-          }
+          <div
+            className={`${
+              filteredProjects.length > 0
+                ? "projectsContainer"
+                : "projectsContainerHidden"
+            }  overflowPanel overflowPanelLeft`}
+          >
+            {isAddButtonVisible && (
+              <button
+                className="btn addProjectBtn"
+                onClick={handleProjectModalView}
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </button>
+            )}
+            {filteredProjects.length > 0
+              ? filteredProjects.map((project, index) => (
+                  <ProjectCard
+                    key={index}
+                    project={project}
+                    onClick={() => handleSelectedProject(project)}
+                    onDoubleClick={(e) => handleDoubleClick(e, project)}
+                  />
+                ))
+              : searchQuery !== "" &&
+                filteredProjects.length === 0 && (
+                  <p>No se encontraron proyectos que coincidan</p>
+                )}
           </div>
           {showProjectModal && <ProjectModal />}
           {showEditModal && <EditModal />}
@@ -182,3 +208,4 @@ export default function ProjectsPanel() {
     </>
   );
 }
+  

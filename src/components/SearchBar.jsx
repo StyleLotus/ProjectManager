@@ -21,9 +21,7 @@ const SearchBar = ({ onSearch }) => {
         value={query}
         onChange={handleInputChange}
       />
-      <button type="submit">
-        <FontAwesomeIcon icon={faSearch} />
-      </button>
+      
     </form>
   );
 };

@@ -1,0 +1,54 @@
+.options-box {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 250px;
+    height: 250px;
+    z-index: 2000;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, .5) 10px 10px ;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 2px;
+    
+  }
+  
+  .options-box input {
+    margin-bottom: 10px;
+    margin: 20px 0 10px 0;
+    padding: 5px;
+    width: 100%;
+  }
+  
+  .options-box button {
+    padding: 5px 10px;
+    margin: 20px 10px 10;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 1), rgba(255, 165, 0, 1));
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .options-box button:hover {
+    background: linear-gradient(135deg, rgba(255, 215, 0, .5), rgba(255, 165, 0, .5));
+  }
+  
+  .color-options {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  
+  .color-option {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  .color-option:hover {
+    outline: 2px solid black;
+  }

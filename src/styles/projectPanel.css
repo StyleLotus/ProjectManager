@@ -39,10 +39,16 @@ settingsBtn {
   grid-template-columns: repeat(4, 1fr);
 }
 
+.projectsContainerHidden{
+  display: flex;
+}
+
 .leftContainer {
   position: relative;
   padding: 50px;
 }
+
+
 
 .taskContainer {
   background-color: #f6f6f6;
