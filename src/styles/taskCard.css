@@ -1,43 +1,73 @@
 .list-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .checkbox {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  
-  .checkbox:checked {
-    background-color: #ffd700;
-  }
-  
-  .description {
-    flex: 1;
-    margin-right: 5px;
-  }
-  
-  .status {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    font-weight: bold;
-  }
-  
-  .completed {
-    background-color: #28a745;
-    color: white;
-  }
-  
-  .in-progress {
-    background-color: #ffc107;
-    color: black;
-  }
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin: 3px;
+}
+
+.checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.checkbox:checked {
+  background-color: #ffd700;
+}
+
+.description {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.completed {
+  background-color: #28a745;
+  color: white;
+}
+
+.in-progress {
+  background-color: #ffc107;
+  color: black;
+}
+
+.edit-delete-buttons {
+  display: flex;
+  font-size: 8px;
+  margin: 5px 0;
+}
+
+.edit-task-button {
+  background-color: #ffc107; /* Color de fondo azul */
+  color: #fff; /* Color de texto blanco */
+  border: none;
+  padding: 5px 10px;
+  margin-right: 1px;
+  border-radius: 5px;
+  font-size: 8px;
+}
+
+.delete-task-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 8px;
+  border-radius: 5px;
+}
+
+.delete-task-button:hover {
+  background-color: #fc7e4d;
+}

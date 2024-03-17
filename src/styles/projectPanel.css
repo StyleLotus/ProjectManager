@@ -12,6 +12,10 @@ body {
   );
 }
 
+ul{
+  padding: 0;
+}
+
 settingsBtn {
   position: absolute;
   background-color: linear-gradient(to bottom, #ffffff, #f2f2f2);

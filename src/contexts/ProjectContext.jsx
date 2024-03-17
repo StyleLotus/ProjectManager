@@ -1,8 +1,9 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 
 export const ProjectContext = createContext(null);
 export const ProjectDispatchContext = createContext(null);
+export const BackgroundColorContext = createContext(null);
 
 export function ProjectProvider({ children }) {
   const [projects, dispatch] = useReducer(tasksDispatch, []);
@@ -16,7 +17,6 @@ export function ProjectProvider({ children }) {
   const [doubleClickY, setDoubleClickY] = useState(null);
   const [editingActive, setEditingActive] = useState(false);
   const [filteredData, setFilteredData] = useState(projects);
-
 
   return (
     <ProjectContext.Provider
@@ -40,8 +40,8 @@ export function ProjectProvider({ children }) {
         setEditingActive,
         showEditModal,
         setShowEditModal,
-        filteredData, 
-        setFilteredData
+        filteredData,
+        setFilteredData,
       }}
     >
       <ProjectDispatchContext.Provider value={dispatch}>
@@ -95,9 +95,23 @@ function tasksDispatch(projects, action) {
             description: action.description,
             color: action.color,
           };
-        }else{
-          return project
+        } else {
+          return project;
         }
+      });
+      return updatedProjects;
+    }
+    case "deleteTask": {
+      const updatedProjects = projects.map((project) => {
+        if (project.id === action.projectId) {
+          const updatedTasks = project.tasks.filter(
+            (task) => task.id !== action.taskId
+          );
+          return {
+            ...project,
+            tasks: updatedTasks,
+          };
+        } else return project;
       });
       return updatedProjects;
     }
