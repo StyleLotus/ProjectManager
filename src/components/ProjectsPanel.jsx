@@ -7,6 +7,7 @@ import ProjectCard from "./ProjectCard";
 import OptionsBox from "./OptionBox";
 import EditModal from "./EditModal";
 import OptionModal from "./OptionsModal";
+import EditTaskModal from "./EditTaskModal";
 
 import {
   ProjectContext,
@@ -25,7 +26,7 @@ import { useContext, useState } from "react";
 
 export default function ProjectsPanel() {
   const [showOptions, setShowOptions] = useState(false);
-  const [username, setUsername] = useState("Lotus")
+  const [username, setUsername] = useState("Lotus");
 
   const {
     showProjectModal,
@@ -42,16 +43,18 @@ export default function ProjectsPanel() {
     setDoubleClickX,
     setShowEditModal,
     showEditModal,
+    showEditTaskModal,
+    selectedTask,
   } = useContext(ProjectContext);
 
   const dispatch = useContext(ProjectDispatchContext);
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleNameChange= (name) =>{
-    setUsername(name)
-    setShowOptions(false)
-  }
+  const handleNameChange = (name) => {
+    setUsername(name);
+    setShowOptions(false);
+  };
 
   const handleShowOptions = () => {
     setShowOptions(!showOptions);
@@ -76,6 +79,10 @@ export default function ProjectsPanel() {
     setVisible(false);
     setSelectedProject(null);
   };
+
+  const handleEditTask = () =>{
+    console.log("Tarea")
+  }
 
   const handleEditProject = () => {
     dispatch({
@@ -130,7 +137,7 @@ export default function ProjectsPanel() {
           <button className="btnAll settingsBtn" onClick={handleShowOptions}>
             <FontAwesomeIcon icon={faGears} />
           </button>
-          {showOptions && <OptionModal onNameChange={handleNameChange}/>}
+          {showOptions && <OptionModal onNameChange={handleNameChange} />}
 
           <h1 className="userName">Hi! {username}</h1>
           <p>Welcome Back to the workspace. We missed you!</p>
@@ -187,7 +194,7 @@ export default function ProjectsPanel() {
                       <ul>
                         {orgarnizeTaskByDate(selectedProject)[date].map(
                           (task, index) => (
-                            <TaskCard key={index} task={task} />
+                            <TaskCard key={index} task={task} onEditTask={handleEditTask}/>
                           )
                         )}
                       </ul>
@@ -202,10 +209,10 @@ export default function ProjectsPanel() {
               <FontAwesomeIcon icon={faPlus} />
             </button>
           )}
+          {showEditTaskModal && <EditTaskModal task={selectedTask} />}
           {showTaskModal && <TaskModal />}
         </section>
       </div>
     </>
   );
 }
-  

@@ -7,21 +7,21 @@ import "../styles/modals.css";
 import { useState, useContext } from "react";
 
 export default function TaskModal() {
-  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const {
     showTaskModal,
     setShowTaskModal,
     selectedProject,
+    nextTaskId,
+    setNextTaskId,
   } = useContext(ProjectContext);
-
 
   const dispatch = useContext(ProjectDispatchContext);
 
   const handleAddTask = () => {
     // Verificar que todos los campos sean completados
-    if (!name.trim() || !dueDate.trim() || !description.trim()) {
+    if (!dueDate.trim() || !description.trim()) {
       alert("Por favor completa todos los campos obligatorios.");
       return;
     }
@@ -31,11 +31,17 @@ export default function TaskModal() {
     dispatch({
       type: "addTask",
       projectId: selectedProject.id,
-      task: { name: name, description: description, dueDate: dueDate, status: 'in-progress' },
+      task: {
+        id: nextTaskId,
+        description: description,
+        dueDate: dueDate,
+        status: "in-progress",
+      },
     });
+ 
+    setNextTaskId(nextTaskId + 1);
 
     // Limpiar los campos después de agregar el Tarea
-    setName("");
     setDueDate("");
     setDescription("");
 
@@ -56,14 +62,6 @@ export default function TaskModal() {
               x
             </button>
           </header>
-          <input
-            className="nameInput"
-            type="text"
-            placeholder="Nombre *"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
 
           <textarea
             placeholder="Descripción *"

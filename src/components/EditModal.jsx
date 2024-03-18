@@ -41,7 +41,7 @@ export default function EditModal() {
       <div className="modal">
         <div className="modal-content">
           <header className="modalHeader">
-            <h2>Editar Proyecto</h2>
+            <h2>Edit Project</h2>
             <button
               className="close"
               onClick={() => setShowEditModal(!showEditModal)}
@@ -69,7 +69,7 @@ export default function EditModal() {
             onChange={(e) => setColor(e.target.value)}
           />
           <button className="buttonAdd" onClick={handleEditProject}>
-            Editar Proyecto
+            Save Changes
           </button>
         </div>
       </div>

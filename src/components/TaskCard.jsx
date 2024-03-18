@@ -11,7 +11,17 @@ const TaskCard = ({ task }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const dispatch = useContext(ProjectDispatchContext);
-  const { selectedProject, setSelectedProject } = useContext(ProjectContext);
+  const {
+    selectedProject,
+    setSelectedProject,
+    setShowEditTaskModal,
+    setSelectedTask,
+  } = useContext(ProjectContext);
+
+  const handleEditClick = () => {
+    setSelectedTask(task);
+    setShowEditTaskModal(true);
+  };
 
   const handleCheckBox = () => {
     setIsChecked(!isChecked);
@@ -22,19 +32,12 @@ const TaskCard = ({ task }) => {
   const handleDeleteTask = () => {
     dispatch({
       type: "deleteTask",
-      projectId : selectedProject.id,
-      taskId: task.id
-    })
-    setSelectedProject(null)
+      projectId: selectedProject.id,
+      taskId: task.id,
+    });
+    setSelectedProject(null);
   };
 
-  const handleEditTask = () => {};
-    dispatch({
-      type: 'editTask',
-      projectId: selectedProject.id,
-      
-    })
-    setSelectedProject(null)
   return (
     <li
       className="list-item"
@@ -54,8 +57,15 @@ const TaskCard = ({ task }) => {
         </span>
         {isHovered && (
           <div className="edit-delete-buttons">
-            <button className="edit-task-button">Edit</button>
-            <button className="delete-task-button" onClick={handleDeleteTask}>Delete</button>
+            <button
+              className="edit-task-button"
+              onClick={() => handleEditClick()}
+            >
+              Edit
+            </button>
+            <button className="delete-task-button" onClick={handleDeleteTask}>
+              Delete
+            </button>
           </div>
         )}
       </div>

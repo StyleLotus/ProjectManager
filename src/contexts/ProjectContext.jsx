@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, useReducer, useState } from "react";
 import PropTypes from "prop-types";
 
 export const ProjectContext = createContext(null);
@@ -8,10 +8,13 @@ export const BackgroundColorContext = createContext(null);
 export function ProjectProvider({ children }) {
   const [projects, dispatch] = useReducer(tasksDispatch, []);
   const [showTaskModal, setShowTaskModal] = useState(false);
+  const [showEditTaskModal, setShowEditTaskModal] = useState(false);
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null);
   const [nextId, setNextId] = useState(0);
+  const [nextTaskId, setNextTaskId] = useState(0);
   const [visible, setVisible] = useState(false);
   const [doubleClickX, setDoubleClickX] = useState(null);
   const [doubleClickY, setDoubleClickY] = useState(null);
@@ -42,6 +45,12 @@ export function ProjectProvider({ children }) {
         setShowEditModal,
         filteredData,
         setFilteredData,
+        nextTaskId,
+        setNextTaskId,
+        showEditTaskModal,
+        setShowEditTaskModal,
+        setSelectedTask,
+        selectedTask,
       }}
     >
       <ProjectDispatchContext.Provider value={dispatch}>
@@ -112,6 +121,29 @@ function tasksDispatch(projects, action) {
             tasks: updatedTasks,
           };
         } else return project;
+      });
+      return updatedProjects;
+    }
+    case "editTask": {
+      const updatedProjects = projects.map((project) => {
+        if (project.id === action.projectId) {
+          const updatedTasks = project.tasks.map((task) => {
+            if (task.id === action.taskId) {
+              return {
+                ...task,
+                description: action.task.description,
+                dueDate: action.task.dueDate,
+                status: action.task.status,
+              };
+            }
+            return task;
+          });
+          return {
+            ...project,
+            tasks: updatedTasks,
+          };
+        }
+        return project;
       });
       return updatedProjects;
     }
